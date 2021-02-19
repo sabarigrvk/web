@@ -1,4 +1,4 @@
-# Starter kit for web apps
+# Starter kit for web apps Hello world
 
 ## Table of Contents
 
