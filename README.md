@@ -12,6 +12,7 @@
   - [yarn deploy](#yarn-deploy)
 
 ## Folder Structure
+
 ```
 ├── .storybook  - storybook configuration
 ├── .vscode     - vscode editor settings
@@ -28,3 +29,22 @@
 │   └── app.js
 ├── public      - static files distributed by server
 ```
+
+## Things inside the box
+
+1. Devel­op­ment / Pro­duc­tion
+2. Hot module replacement
+3. Dynamic code splitting
+4. Lazy loading
+5. Modern & Legacy JS bundles
+6. Cache busting with manifest.json
+7. Critical css
+8. Postcss
+9. Workbox service worker
+10. Image optimization
+11. Automatic .webp creation
+12. React
+13. Tailwind css
+14. Offline compression of static resources
+15. Server side rendering support
+16. Linting of CSS and JS
