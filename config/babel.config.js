@@ -1,8 +1,8 @@
 const pkg = require("../package.json");
 
 module.exports = (api) => {
-  // console.log("\nenvironment", api.env("development"));
-  api.cache(false);
+  // caches transformations in dev environment
+  api.cache.using(() => process.env.NODE_ENV);
   return {
     presets: [
       // A Babel preset that can automatically determine the Babel plugins and polyfills
@@ -11,12 +11,12 @@ module.exports = (api) => {
         "@babel/preset-env",
         {
           modules: false,
-          useBuiltIns: false,
+          useBuiltIns: "entry",
         },
       ],
       "@babel/preset-react",
     ],
-    plugins: ["react-hot-loader/babel", "@babel/plugin-syntax-dynamic-import"],
+    plugins: ["react-hot-loader/babel"],
     ignore: ["node_modules", "build"],
   };
 };
