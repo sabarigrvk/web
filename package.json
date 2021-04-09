@@ -10,11 +10,13 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack serve --node-env development --config ./config/webpack",
-    "build": "webpack --progress --node-env production --config ./config/webpack",
-    "dev:build:server": "webpack --node-env production --config ./config/webpack/server"
+    "build": "webpack --progress --node-env production --config ./config/webpack && nodemon --watch build --exec \"node build/bundle.js\"",
+    "deploy": ""
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
+    "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.13.5",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",

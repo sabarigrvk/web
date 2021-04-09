@@ -3,14 +3,15 @@ const { default: merge } = require("webpack-merge");
 const { SRC_DIR, BUILD_DIR } = require("../paths");
 const { JSLoader } = require("./loaders");
 const { HTMLPlugin } = require("./plugins");
-const devConfig = require("./client.dev");
-const prodConfig = require("./prod");
+const clientConfig = require("./client");
+const serverConfig = require("./server");
 module.exports = (env, argv) => {
+  const environment = process.env.NODE_ENV || argv.mode;
   // base configuration
   const baseConfig = {
     entry: {
-      client: SRC_DIR + "/client.js",
-      server: SRC_DIR + "/server.js",
+      client: SRC_DIR + "/client/index.js",
+      server: SRC_DIR + "/server/index.js",
     },
     output: {
       path: BUILD_DIR,
@@ -18,19 +19,13 @@ module.exports = (env, argv) => {
       filename: "[name].bundle.js",
     },
     module: {
-      rules: [
-        JSLoader,
-      ],
+      rules: [JSLoader],
     },
     plugins: [HTMLPlugin],
   };
-
-  switch (process.env.NODE_ENV || argv.mode) {
-    case "development":
-      return merge(baseConfig, devConfig);
-    case "production":
-      return merge(baseConfig, prodConfig);
-    default:
-      throw new Error("No matching configuration found");
-  }
+  console.log(clientConfig);
+  return [
+    merge(baseConfig, clientConfig[environment]),
+    merge(baseConfig, serverConfig[environment]),
+  ];
 };
