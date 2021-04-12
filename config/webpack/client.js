@@ -1,4 +1,5 @@
 import { join } from "path";
+import TerserPlugin from "terser-webpack-plugin";
 import paths from "../paths";
 import { resolvers } from "./utils";
 import { clientLoaders } from "./loaders";
@@ -27,7 +28,9 @@ const baseConfig = {
   },
   plugins: [...sharedPlugins, ...clientPlugins],
   node: {},
-  optimization: {},
+  optimization: {
+    
+  },
   stats: {
     cached: false,
     cachedAssets: false,
@@ -46,6 +49,7 @@ const baseConfig = {
 export default {
   development: {
     ...baseConfig,
+    devtool: "cheap-module-inline-source-map",
     performance: {
       hints: false,
     },
@@ -53,5 +57,6 @@ export default {
   // https://github.com/manuelbieh/react-ssr-setup/blob/17a510d92ed2d550e1ead284a5aa9a7b30eae2d4/config/webpack.config.ts/client.prod.ts
   production: {
     ...baseConfig,
+    devtool: "source-map"
   },
 };

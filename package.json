@@ -9,9 +9,9 @@
   "homepage": "https://github.com/sabarigrvk/primer",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development babel-node scripts/start",
+    "start": "cross-env NODE_ENV=development babel-node --config-file ./config/babel.config.js ./scripts/start",
     "build": "cross-env NODE_ENV=production babel-node --config-file ./config/babel.config.js ./scripts/build",
-    "dev:build:server": "webpack --node-env production --config ./config/webpack/server"
+    "build-client": "cross-env NODE_ENV=production babel-node --config-file ./config/babel.config.js ./scripts/build --client-only"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -24,6 +24,7 @@
     "@babel/preset-env": "^7.13.5",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
+    "chalk": "^2.4.2",
     "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.10.1",
     "cross-env": "^7.0.3",

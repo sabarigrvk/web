@@ -24,7 +24,9 @@ const baseConfig = {
     rules: serverLoaders,
   },
   plugins: [...sharedPlugins, ...serverPlugins],
-  node: {},
+  node: {
+    __dirname: false,
+  },
   externals: [
     nodeExternals({
       allowlist: /\.css$/,
@@ -57,7 +59,6 @@ export default {
       hints: false,
     },
   },
-  // https://github.com/manuelbieh/react-ssr-setup/blob/17a510d92ed2d550e1ead284a5aa9a7b30eae2d4/config/webpack.config.ts/client.prod.ts
   production: {
     ...baseConfig,
   },

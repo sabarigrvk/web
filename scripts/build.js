@@ -3,14 +3,21 @@ import rimraf from "rimraf";
 import nodemon from "nodemon";
 import fs from "fs";
 import puppeteer from "puppeteer";
+import chalk from "chalk";
 
 import getConfig from "../config/webpack";
 import paths from "../config/paths";
-import { compilerPromise } from "./utils";
-const { CLIENT_BUILD_DIR, SERVER_BUILD_DIR, PUBLIC_DIR } = paths;
+import { compilerPromise, clientOnly } from "./utils";
 
-const webpackConfig = getConfig(process.env.NODE_ENV || "development");
+const { CLIENT_BUILD_DIR, SERVER_BUILD_DIR } = paths;
+const [clientConfig, serverConfig] = getConfig(
+  process.env.NODE_ENV || "development"
+);
 const HOST = process.env.HOST || "localhost";
+
+// cleans the build directory
+rimraf.sync(CLIENT_BUILD_DIR);
+rimraf.sync(SERVER_BUILD_DIR);
 
 const generateStaticHTML = async () => {
   // TODO: choose alternate port if already used
@@ -45,11 +52,6 @@ const generateStaticHTML = async () => {
 };
 
 const buildServer = async () => {
-  rimraf.sync(CLIENT_BUILD_DIR);
-  rimraf.sync(SERVER_BUILD_DIR);
-
-  const [clientConfig, serverConfig] = webpackConfig;
-
   const compiler = webpack([clientConfig, serverConfig]);
 
   const clientCompiler = compiler.compilers.find(
@@ -88,6 +90,34 @@ const buildServer = async () => {
   }
 };
 
-function buildClient() {}
+const buildClient = async () => {
+  const webpackCompiler = webpack([clientConfig]);
 
-buildServer();
+  const clientCompiler = webpackCompiler.compilers.find(
+    (compiler) => compiler.name === "client"
+  );
+  const clientPromise = compilerPromise("client", clientCompiler);
+
+  clientCompiler.watch({}, (error, stats) => {
+    if (!error && !stats.hasErrors()) {
+      console.log(stats.toString(clientConfig.stats));
+      return;
+    }
+    console.error(stats.compilation.errors);
+  });
+
+  // wait until client and server is compiled
+  try {
+    await clientPromise;
+    console.log(`Done building ${chalk.bold.cyanBright("client")}`);
+    process.exit();
+  } catch (error) {
+    console.error(`Error building client: ${chalk.bold.redBright(error)}`);
+  }
+};
+
+if (clientOnly()) {
+  buildClient();
+} else {
+  buildServer();
+}
