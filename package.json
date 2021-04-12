@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=development babel-node scripts/start",
-    "build": "cross-env NODE_ENV=production babel-node scripts/build",
+    "build": "cross-env NODE_ENV=production babel-node --config-file ./config/babel.config.js ./scripts/build",
     "dev:build:server": "webpack --node-env production --config ./config/webpack/server"
   },
   "devDependencies": {
@@ -31,12 +31,16 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.4.1",
     "nodemon": "^2.0.7",
+    "puppeteer": "^8.0.0",
+    "rimraf": "^3.0.2",
     "style-loader": "^2.0.0",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-merge": "^5.7.3",
+    "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
     "react": "^17.0.2",

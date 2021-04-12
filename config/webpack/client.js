@@ -1,32 +1,32 @@
 import { join } from "path";
-import { CLIENT_SRC, CLIENT_BUILD, PUBLIC } from "../paths";
+import paths from "../paths";
+import { resolvers } from "./utils";
+import { clientLoaders } from "./loaders";
+import { sharedPlugins, clientPlugins } from "./plugins";
+const { CLIENT_SRC_DIR, CLIENT_BUILD_DIR, PUBLIC_DIR } = paths;
 
 // https://github.com/manuelbieh/react-ssr-setup/blob/17a510d92ed2d550e1ead284a5aa9a7b30eae2d4/config/webpack.config.ts/client.base.ts
 const baseConfig = {
   name: "client",
   target: "web",
   entry: {
-    bundle: CLIENT_SRC,
+    bundle: CLIENT_SRC_DIR,
   },
   output: {
-    path: join(CLIENT_BUILD, PUBLIC),
+    path: join(CLIENT_BUILD_DIR, PUBLIC_DIR),
     filename: "bundle.js",
-    publicPath: PUBLIC,
+    publicPath: PUBLIC_DIR,
     chunkFilename: "[name].[chunkhash:8].chunk.js",
   },
+  resolve: {
+    ...resolvers,
+  },
+  // loader config for server
   module: {
-    rules: [
-      // loader config for client
-    ],
+    rules: clientLoaders,
   },
-  plugins: [],
-  node: {
-    dgram: "empty",
-    fs: "empty",
-    net: "empty",
-    tls: "empty",
-    child_process: "empty",
-  },
+  plugins: [...sharedPlugins, ...clientPlugins],
+  node: {},
   optimization: {},
   stats: {
     cached: false,

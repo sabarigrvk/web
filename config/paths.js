@@ -7,19 +7,20 @@ const resolveApp = (relativePath) => resolve(rootDir, relativePath);
 
 const paths = {
   HTML_TEMPLATE: resolveApp("config/webpack/template.html"),
-  CLIENT_BUILD: resolveApp("build/client"),
-  SERVER_BUILD: resolveApp("build/server"),
+  CLIENT_BUILD_DIR: resolveApp("build/client"),
+  SERVER_BUILD_DIR: resolveApp("build/server"),
   DOTENV: resolveApp(".env"),
-  SRC: resolveApp("src"),
-  CLIENT_SRC: resolveApp("src/client"),
-  SERVER_SRC: resolveApp("src/server"),
-  PUBLIC: "/static/",
+  SRC_DIR: resolveApp("src"),
+  CLIENT_SRC_DIR: resolveApp("src/client"),
+  SERVER_SRC_DIR: resolveApp("src/server"),
+  CONFIG_DIR: resolveApp("config"),
+  PUBLIC_DIR: "/static/",
 };
 
 paths.resolveModules = [
-  paths.CLIENT_SRC,
-  paths.SERVER_SRC,
-  paths.SRC,
+  paths.CLIENT_SRC_DIR,
+  paths.SERVER_SRC_DIR,
+  paths.SRC_DIR,
   "node_modules",
 ];
 

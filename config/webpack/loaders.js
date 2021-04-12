@@ -1,6 +1,7 @@
-const { SRC_DIR, CONFIG_DIR } = require("../paths");
-const { isProd } = require("./helpers");
-const JSLoader = {
+import paths from "../paths";
+const { isDev, isProd } = require("./utils");
+const { SRC_DIR, CONFIG_DIR } = paths;
+const scriptsLoader = {
   test: /\.js$/i,
   include: SRC_DIR,
   exclude: /node_modules/,
@@ -8,7 +9,7 @@ const JSLoader = {
     loader: require.resolve("babel-loader"),
     options: {
       babelrc: false,
-      cacheDirectory: true,
+      cacheDirectory: isDev(),
       cacheCompression: isProd(),
       compact: isProd(),
       envName: process.env.NODE_ENV,
@@ -18,6 +19,19 @@ const JSLoader = {
   },
 };
 
-module.exports = {
-  JSLoader,
+export const clientLoaders = [
+  {
+    oneOf: [scriptsLoader],
+  },
+];
+
+export const serverLoaders = [
+  {
+    oneOf: [scriptsLoader],
+  },
+];
+
+export default {
+  clientLoaders,
+  serverLoaders,
 };

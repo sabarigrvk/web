@@ -1,34 +1,36 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { PUBLIC_DIR } = require("../paths");
-const { isProd } = require("./helpers");
-const HTMLPlugin = new HtmlWebpackPlugin({
-  title: "Hello Universe",
-  inject: true,
-  filename: "index.html", // output file
-  template: PUBLIC_DIR + "/index.html", // template file
-  ...(isProd() && {
-    minify: {
-      removeComments: true,
-      collapseWhitespace: true,
-      removeRedundantAttributes: true,
-      useShortDoctype: true,
-      removeEmptyAttributes: true,
-      removeStyleLinkTypeAttributes: true,
-      keepClosingSlash: true,
-      minifyJS: true,
-      minifyCSS: true,
-      minifyURLs: true,
-    },
+import { join } from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import paths from "../paths";
+import { isDev } from "./utils";
+const { HTML_TEMPLATE, CLIENT_BUILD_DIR } = paths;
+
+export const sharedPlugins = [
+  new MiniCssExtractPlugin({
+    filename: isDev() ? "[name].css" : "[name].[contenthash].css",
+    chunkFilename: isDev() ? "[id].css" : "[id].[contenthash].css",
   }),
-});
+];
 
-const CleanPlugin = new CleanWebpackPlugin({
-  dry: false,
-  verbose: true,
-});
+export const clientPlugins = [
+  new HtmlWebpackPlugin({
+    filename: join(CLIENT_BUILD_DIR, "index.html"),
+    inject: true,
+    template: HTML_TEMPLATE,
+  }),
+  ,
+  new webpack.DefinePlugin({
+    __SERVER__: "false",
+    __BROWSER__: "true",
+  }),
+].filter(Boolean);
 
-module.exports = {
-  HTMLPlugin,
-  CleanPlugin
-};
+export const serverPlugins = [
+  new webpack.DefinePlugin({
+    __SERVER__: "true",
+    __BROWSER__: "false",
+  }),
+];
+
+export default { sharedPlugins, clientPlugins, serverPlugins };
