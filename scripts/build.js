@@ -52,12 +52,12 @@ const generateStaticHTML = async () => {
 };
 
 const buildServer = async () => {
-  const compiler = webpack([clientConfig, serverConfig]);
+  const { compilers } = webpack([clientConfig, serverConfig]);
 
-  const clientCompiler = compiler.compilers.find(
+  const clientCompiler = compilers.find(
     (compiler) => compiler.name === "client"
   );
-  const serverCompiler = compiler.compilers.find(
+  const serverCompiler = compilers.find(
     (compiler) => compiler.name === "server"
   );
 

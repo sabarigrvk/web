@@ -1,4 +1,6 @@
 import { join } from "path";
+import webpack from "webpack";
+import WriteFileWebpackPlugin from "write-file-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import paths from "../paths";
 import { resolvers } from "./utils";
@@ -6,12 +8,11 @@ import { clientLoaders } from "./loaders";
 import { sharedPlugins, clientPlugins } from "./plugins";
 const { CLIENT_SRC_DIR, CLIENT_BUILD_DIR, PUBLIC_DIR } = paths;
 
-// https://github.com/manuelbieh/react-ssr-setup/blob/17a510d92ed2d550e1ead284a5aa9a7b30eae2d4/config/webpack.config.ts/client.base.ts
 const baseConfig = {
   name: "client",
   target: "web",
   entry: {
-    bundle: CLIENT_SRC_DIR,
+    bundle: [CLIENT_SRC_DIR],
   },
   output: {
     path: join(CLIENT_BUILD_DIR, PUBLIC_DIR),
@@ -29,7 +30,7 @@ const baseConfig = {
   plugins: [...sharedPlugins, ...clientPlugins],
   node: {},
   optimization: {
-    
+
   },
   stats: {
     cached: false,
@@ -49,14 +50,23 @@ const baseConfig = {
 export default {
   development: {
     ...baseConfig,
-    devtool: "cheap-module-inline-source-map",
+    devtool: false,
+    plugins: [
+      // new WriteFileWebpackPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      ...baseConfig.plugins,
+    ],
+
     performance: {
       hints: false,
     },
   },
-  // https://github.com/manuelbieh/react-ssr-setup/blob/17a510d92ed2d550e1ead284a5aa9a7b30eae2d4/config/webpack.config.ts/client.prod.ts
   production: {
     ...baseConfig,
-    devtool: "source-map"
+    devtool: false,
+    output: {
+      ...baseConfig.output,
+      filename: "bundle.[contenthash:8].js",
+    },
   },
 };

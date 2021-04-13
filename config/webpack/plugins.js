@@ -1,8 +1,10 @@
 import { join } from "path";
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import { WebpackManifestPlugin } from "webpack-manifest-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import paths from "../paths";
+import { clientOnly } from "../../scripts/utils";
 import { isDev } from "./utils";
 const { HTML_TEMPLATE, CLIENT_BUILD_DIR } = paths;
 
@@ -14,12 +16,13 @@ export const sharedPlugins = [
 ];
 
 export const clientPlugins = [
-  new HtmlWebpackPlugin({
-    filename: join(CLIENT_BUILD_DIR, "index.html"),
-    inject: true,
-    template: HTML_TEMPLATE,
-  }),
-  ,
+  clientOnly() &&
+    new HtmlWebpackPlugin({
+      filename: join(CLIENT_BUILD_DIR, "index.html"),
+      inject: true,
+      template: HTML_TEMPLATE,
+    }),
+  new WebpackManifestPlugin({ fileName: "manifest.json" }),
   new webpack.DefinePlugin({
     __SERVER__: "false",
     __BROWSER__: "true",

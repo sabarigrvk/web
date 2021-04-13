@@ -1,4 +1,8 @@
+import { resolve } from "path";
+import webpack from "webpack";
 import nodeExternals from "webpack-node-externals";
+import WriteFileWebpackPlugin from "write-file-webpack-plugin";
+
 import paths from "../paths";
 import { resolvers } from "./utils";
 import { serverLoaders } from "./loaders";
@@ -9,7 +13,11 @@ const baseConfig = {
   name: "server",
   target: "node",
   entry: {
-    server: SERVER_SRC_DIR,
+    server: [
+      require.resolve("core-js/stable"),
+      require.resolve("regenerator-runtime/runtime"),
+      resolve(SERVER_SRC_DIR, "index.js"),
+    ],
   },
   output: {
     path: SERVER_BUILD_DIR,
@@ -34,6 +42,7 @@ const baseConfig = {
   ],
   optimization: {},
   stats: {
+    assets: false,
     cached: false,
     cachedAssets: false,
     chunks: false,
@@ -42,10 +51,10 @@ const baseConfig = {
     colors: true,
     hash: false,
     modules: false,
+    performance: false,
     reasons: false,
     timings: true,
     version: false,
-    errorDetails: true,
   },
   node: {
     __dirname: false,
@@ -55,6 +64,11 @@ const baseConfig = {
 export default {
   development: {
     ...baseConfig,
+    plugins: [
+      // new WriteFileWebpackPlugin(),
+      ...baseConfig.plugins,
+      new webpack.HotModuleReplacementPlugin(),
+    ],
     performance: {
       hints: false,
     },

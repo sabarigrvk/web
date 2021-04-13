@@ -1,12 +1,11 @@
-import path from "path";
 import paths from "../paths";
 
 const { resolveModules } = paths;
 
-const isDev = () => process.env.NODE_ENV === "development";
-const isProd = () => process.env.NODE_ENV === "production";
+export const isDev = () => process.env.NODE_ENV === "development";
+export const isProd = () => process.env.NODE_ENV === "production";
 
-const resolvers = {
+export const resolvers = {
   extensions: [".js", ".json", ".jsx", ".ts", ".tsx", ".css"],
   modules: resolveModules,
   alias: {
@@ -15,4 +14,4 @@ const resolvers = {
   },
 };
 
-module.exports = { isDev, isProd, resolvers };
+export default { isDev, isProd, resolvers };

@@ -1,5 +1,5 @@
 import paths from "../paths";
-const { isDev, isProd } = require("./utils");
+import { isDev, isProd } from "./utils";
 const { SRC_DIR, CONFIG_DIR } = paths;
 const scriptsLoader = {
   test: /\.js$/i,

@@ -1,16 +1,32 @@
+import { join } from "path";
 import express from "express";
-import React from "react";
-import { renderToString } from "react-dom/server";
-import App from "../components/app";
-
+import cors from "cors";
+import manifestHelpers from "express-manifest-helpers";
+import paths from "../../config/paths";
+import serverRenderer from "../middleware/renderer";
+const { CLIENT_BUILD_DIR, PUBLIC_DIR } = paths;
 const app = express();
 
-app.get("/", (req, res) => {
-  const content = renderToString(<App />);
+app.use(PUBLIC_DIR, express.static(join(CLIENT_BUILD_DIR, PUBLIC_DIR)));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded());
 
-  res.send(content);
+const manifestPath = join(CLIENT_BUILD_DIR, PUBLIC_DIR);
+
+app.use(
+  manifestHelpers({
+    manifestPath: `${manifestPath}/manifest.json`,
+  })
+);
+// Register server-side rendering middleware
+app.use(serverRenderer());
+
+app.listen(process.env.PORT || 8500, () => {
+  console.log(
+    `[${new Date().toISOString()}]`,
+    `App is running: http://localhost:${process.env.PORT || 8500}`
+  );
 });
 
-app.listen(3000, () => {
-  console.log("Port 3000, listening");
-});
+export default app;
