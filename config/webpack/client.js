@@ -1,6 +1,5 @@
 import { join } from "path";
 import webpack from "webpack";
-import WriteFileWebpackPlugin from "write-file-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import paths from "../paths";
 import { resolvers } from "./utils";
@@ -50,20 +49,15 @@ const baseConfig = {
 export default {
   development: {
     ...baseConfig,
-    devtool: false,
+    devtool: "inline-cheap-module-source-map",
     plugins: [
-      // new WriteFileWebpackPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       ...baseConfig.plugins,
     ],
-
-    performance: {
-      hints: false,
-    },
   },
   production: {
     ...baseConfig,
-    devtool: false,
+    devtool: "source-map",
     output: {
       ...baseConfig.output,
       filename: "bundle.[contenthash:8].js",
