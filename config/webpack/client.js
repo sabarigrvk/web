@@ -1,6 +1,5 @@
 import { join } from "path";
 import webpack from "webpack";
-import TerserPlugin from "terser-webpack-plugin";
 import paths from "../paths";
 import { resolvers } from "./utils";
 import { clientLoaders } from "./loaders";
@@ -28,9 +27,7 @@ const baseConfig = {
   },
   plugins: [...sharedPlugins, ...clientPlugins],
   node: {},
-  optimization: {
-
-  },
+  optimization: {},
   stats: {
     cached: false,
     cachedAssets: false,
@@ -50,10 +47,7 @@ export default {
   development: {
     ...baseConfig,
     devtool: "inline-cheap-module-source-map",
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      ...baseConfig.plugins,
-    ],
+    plugins: [new webpack.HotModuleReplacementPlugin(), ...baseConfig.plugins],
   },
   production: {
     ...baseConfig,

@@ -13,7 +13,7 @@ module.exports = (api) => {
           corejs: 3.6,
           targets: {
             node: "current",
-            browsers: pkg.browserslist[api.env()],x
+            browsers: pkg.browserslist[api.env()],
           },
         },
       ],

@@ -1,0 +1,35 @@
+/*
+asset bundle.e2b7b911ae02ec9d4a87.css 103 bytes [emitted] [immutable] (name: bundle) 1 related asset
+asset ../index.html 442 bytes [emitted]
+asset manifest.json 279 bytes [emitted]
+Entrypoint bundle 126 KiB (313 KiB) = bundle.e2b7b911ae02ec9d4a87.css 103 bytes bundle.1e148d42.js 126 KiB 2 auxiliary assets
+client compiled successfully in 6215 ms
+Done building client
+MAC1020:web sabarivenkateshr$ npm run build-client
+
+> web@1.0.0 build-client /Users/sabarivenkateshr/Public/web
+> cross-env NODE_ENV=production babel-node --config-file ./config/babel.config.js ./scripts/build --client-only
+
+production
+(node:2736) ExperimentalWarning: Package name self resolution is an experimental feature. This feature could change at any time
+[client] Compiling 
+production
+production web
+assets by info 126 KiB [immutable]
+  asset bundle.1e148d42.js 126 KiB [emitted] [immutable] [minimized] (name: bundle) 2 related assets
+  asset bundle.8fd9823723871cc49da3.css 120 bytes [emitted] [immutable] (name: bundle) 1 related asset
+asset ../index.html 442 bytes [emitted]
+asset manifest.json 279 bytes [emitted]
+Entrypoint bundle 126 KiB (313 KiB) = bundle.8fd9823723871cc49da3.css 120 bytes bundle.1e148d42.js 126 KiB 2 auxiliary assets
+client compiled successfully in 5988 ms
+*/
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+}
+.root {
+  display: none;
+}
