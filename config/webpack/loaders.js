@@ -98,15 +98,43 @@ const cssModuleLoaderServer = {
   ],
 };
 
+const assetLoaderClient = {
+  test: /\.(png|jpe?g|gif|svg)$/,
+  type: "asset",
+  parser: {
+    dataUrlCondition: {
+      maxSize: 20 * 1024, // 20kb
+    },
+  },
+};
+
+const assetLoaderServer = {
+  ...assetLoaderClient,
+  // https://webpack.js.org/configuration/module/#rulegeneratoremit
+  generator: {
+    emit: false,
+  },
+};
+
 export const clientLoaders = [
   {
-    oneOf: [scriptsLoader, cssLoaderClient, cssModuleLoaderClient],
+    oneOf: [
+      scriptsLoader,
+      cssLoaderClient,
+      cssModuleLoaderClient,
+      assetLoaderClient,
+    ],
   },
 ];
 
 export const serverLoaders = [
   {
-    oneOf: [scriptsLoader, cssLoaderServer, cssModuleLoaderServer],
+    oneOf: [
+      scriptsLoader,
+      cssLoaderServer,
+      cssModuleLoaderServer,
+      assetLoaderServer,
+    ],
   },
 ];
 

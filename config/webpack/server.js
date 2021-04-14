@@ -21,6 +21,7 @@ const baseConfig = {
   },
   output: {
     path: SERVER_BUILD_DIR,
+    assetModuleFilename: "assets/[name].[hash:8].[ext]",
     filename: "server.js",
     publicPath: PUBLIC_DIR,
   },

@@ -27,6 +27,7 @@ export const clientPlugins = [
     __SERVER__: "false",
     __BROWSER__: "true",
   }),
+  new webpack.ProgressPlugin({ modulesCount: 10000 }),
 ].filter(Boolean);
 
 export const serverPlugins = [

@@ -1,10 +1,5 @@
 {
   "compilerOptions": {
-    "checkJs": false,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "target": "es6",
-    "module": "es2015",
     "baseUrl": "./src",
     "paths": {
       "*": ["shared/*", "client/*", "server/*", "config/*", "*"]
@@ -19,9 +14,5 @@
     ".npm",
     ".yarn"
   ],
-  "include": ["src", "config", "scripts"],
-  "typeAcquisition": {
-    "enable": true,
-    "include": ["react", "react-dom", "jest", "testing-library__jest-dom"]
-  }
+  "include": ["src", "config", "scripts"]
 }

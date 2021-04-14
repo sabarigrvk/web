@@ -15,6 +15,7 @@ const baseConfig = {
   output: {
     path: join(CLIENT_BUILD_DIR, PUBLIC_DIR),
     filename: "bundle.js",
+    assetModuleFilename: "assets/[name].[hash:8].[ext]",
     publicPath: PUBLIC_DIR,
     chunkFilename: "[name].[chunkhash:8].chunk.js",
   },

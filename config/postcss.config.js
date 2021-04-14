@@ -1,6 +1,7 @@
 const pkg = require("../package.json");
 module.exports = (api) => {
-  console.log(api.env, api.webpackLoaderContext.target);
+  // api.env: "production" || development
+  // api.webpackLoaderContext.target: web || node;
   return {
     // You can specify any options from https://postcss.org/api/#processoptions here
     plugins: [
@@ -8,15 +9,17 @@ module.exports = (api) => {
       [
         "postcss-preset-env",
         {
-          /* options */
+          /* stage 2 features + features object */
           stage: 2,
-          browsers: pkg.browserslist[api.env],
-          autoprefixer: { flexbox: "no-2009" },
-          // https://github.com/csstools/postcss-preset-env/blob/master/src/lib/plugins-by-id.js#L36
+          /* List of all features - https://cssdb.org/features */
+          // Postcss specific feature id - https://github.com/csstools/postcss-preset-env/blob/master/src/lib/plugins-by-id.js#L36
           features: {
             "nesting-rules": true,
             "color-functional-notation": true,
+            "custom-media-queries": true
           },
+          browsers: pkg.browserslist[api.env],
+          autoprefixer: { flexbox: "no-2009" },
         },
       ],
 

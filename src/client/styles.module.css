@@ -23,6 +23,9 @@ asset manifest.json 279 bytes [emitted]
 Entrypoint bundle 126 KiB (313 KiB) = bundle.8fd9823723871cc49da3.css 120 bytes bundle.1e148d42.js 126 KiB 2 auxiliary assets
 client compiled successfully in 5988 ms
 */
+@custom-media --viewport-medium (width > 500px);
+
+
 * {
   box-sizing: border-box;
 }
@@ -30,6 +33,11 @@ html,
 body {
   margin: 0;
 }
-.root {
-  display: none;
+body {
+  background: url("assets/react.png");
+}
+@media (--viewport-medium) {
+  .root {
+    display: flex;
+  }
 }
