@@ -6,6 +6,9 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import paths from "../paths";
 import { clientOnly } from "../../scripts/utils";
 import { isDev } from "./utils";
+import envBuilder from "../env";
+
+const env = envBuilder();
 const { HTML_TEMPLATE, CLIENT_BUILD_DIR } = paths;
 
 export const sharedPlugins = [
@@ -23,6 +26,7 @@ export const clientPlugins = [
       template: HTML_TEMPLATE,
     }),
   new WebpackManifestPlugin({ fileName: "manifest.json" }),
+  new webpack.DefinePlugin(env.stringified),
   new webpack.DefinePlugin({
     __SERVER__: "false",
     __BROWSER__: "true",

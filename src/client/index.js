@@ -1,10 +1,20 @@
 import React from "react";
 import { hydrate } from "react-dom";
-import App from "../components/app";
-import "./app.css";
-import styles from "./styles.module.css";
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
+import { HelmetProvider } from 'react-helmet-async';
+import App from "components/App";
 
-hydrate(<App />, document.getElementById("app"));
+let history = createBrowserHistory();
+
+hydrate(
+  <Router history={history}>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </Router>,
+  document.getElementById("app")
+);
 
 if (process.env.NODE_ENV === "development") {
   if (module.hot) {
