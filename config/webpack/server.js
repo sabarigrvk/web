@@ -1,14 +1,12 @@
 import { resolve } from "path";
 import webpack from "webpack";
 import nodeExternals from "webpack-node-externals";
-import WriteFileWebpackPlugin from "write-file-webpack-plugin";
 
 import paths from "../paths";
 import { resolvers } from "./utils";
 import { serverLoaders } from "./loaders";
 import { sharedPlugins, serverPlugins } from "./plugins";
 const { SERVER_SRC_DIR, SERVER_BUILD_DIR, PUBLIC_DIR } = paths;
-// https://github.com/manuelbieh/react-ssr-setup/blob/17a510d92ed2d550e1ead284a5aa9a7b30eae2d4/config/webpack.config.ts/client.base.ts
 const baseConfig = {
   name: "server",
   target: "node",
@@ -65,11 +63,7 @@ const baseConfig = {
 export default {
   development: {
     ...baseConfig,
-    plugins: [
-      // new WriteFileWebpackPlugin(),
-      ...baseConfig.plugins,
-      new webpack.HotModuleReplacementPlugin(),
-    ],
+    plugins: [...baseConfig.plugins, new webpack.HotModuleReplacementPlugin()],
     performance: {
       hints: false,
     },

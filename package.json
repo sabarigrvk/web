@@ -54,6 +54,7 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "express-manifest-helpers": "^0.6.0",
     "history": "^4.10.1",
@@ -63,6 +64,7 @@
     "react-hot-loader": "^4.13.0",
     "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
+    "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

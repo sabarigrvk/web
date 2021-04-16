@@ -8,7 +8,7 @@ module.exports = (api) => {
       [
         "@babel/env",
         {
-          useBuiltIns: "entry",
+          useBuiltIns: "usage",
           corejs: 3.6,
           targets: {
             node: "current",

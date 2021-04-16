@@ -1,9 +1,18 @@
-/* eslint-disable security/detect-object-injection */
-const routes = {
-  home: "/",
-  page1: "/page-1",
-  page2: "/page-2",
-};
+import Home, { loadData } from "shared/components/pages/Home";
+import About from "shared/components/pages/About";
+const routes = [
+  {
+    path: "/",
+    component: Home,
+    exact: true,
+    loadData,
+  },
+  {
+    path: "/about",
+    component: About,
+    exact: true,
+  },
+];
 
 export const getRoute = (path, params, routesConfig) =>
   path.split(".").reduce((routeBranch, pathItem) => {

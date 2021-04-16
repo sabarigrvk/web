@@ -37,6 +37,7 @@ const baseConfig = {
     children: false,
     colors: true,
     hash: false,
+    errorDetails: true,
     modules: false,
     reasons: false,
     timings: true,

@@ -1,6 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Helmet } from "react-helmet-async";
-export default function About() {
+const About = (props) => {
   return (
     <h1>
       Hello About
@@ -9,4 +10,6 @@ export default function About() {
       </Helmet>
     </h1>
   );
-}
+};
+
+export default connect()(About);
